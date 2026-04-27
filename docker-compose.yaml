@@ -1,0 +1,24 @@
+services:
+  python-web:
+    build:
+      context: ./service-a
+      dockerfile: ../Dockerfile.local
+    ports:
+      - "8000:8000"
+      - "3000:3000"
+    environment:
+      - WDS_SOCKET_PORT=0
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      - java-backend
+  java-backend:
+    build:
+      context: ./student-service/student-service
+      dockerfile: ../../Dockerfile.java
+    ports:
+      - "8081:8081"
+    volumes:
+      - ./data:/app/data

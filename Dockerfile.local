@@ -1,0 +1,18 @@
+FROM python:3.12-slim
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y nodejs npm && apt-get clean
+COPY requiremnts.txt .
+RUN pip install --no-cache-dir -r requiremnts.txt
+
+COPY . .
+
+WORKDIR /app/student-frontend
+RUN npm install
+
+RUN npm run build 
+
+EXPOSE 8000 3000
+WORKDIR /app
+
+CMD ["sh", "-c", "CI=true npm start --prefix student-frontend & uvicorn app:app --host 0.0.0.0 --port 8000"]
