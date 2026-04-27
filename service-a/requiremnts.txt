@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+pandas
+faker
+requests
+validators
+pytest
+pytest-playwright
